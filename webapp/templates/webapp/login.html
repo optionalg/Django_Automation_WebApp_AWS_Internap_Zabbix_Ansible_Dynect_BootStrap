@@ -1,0 +1,24 @@
+{% extends 'webapp/base.html' %} {% load staticfiles %} {% block content %} {% if form.errors %}
+<p>Your username and password didn't match. Please try again.</p>
+{% endif %}
+
+<div class="container">
+  <form class="col-md-10" method="post" action="{% url 'django.contrib.auth.views.login' %}">
+    {% csrf_token %}
+    <div class="form-group">
+      <input type="text" class="form-control input-lg" placeholder="User Name" required id="id_username" maxlength="254" name="username" />
+    </div>
+
+    <div class="form-group">
+      <input type="password" class="form-control input-lg" placeholder="Password" required id="id_password" name="password" />
+    </div>
+
+    <div class="form-group">
+      <button class="btn btn-lg btn-primary btn-block" type="submit" value="login">Login</button>
+      <input type="hidden" name="next" value="{{ next }}" />
+    </div>
+  </form>
+</div>
+<!-- /container -->
+
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'webapp/base.html' %} {% load staticfiles %} {% block content %}
+<div class="alert alert-info alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>RESPONSE POOLS</th>
+          <th>Label</th>
+          <th>Address</th>
+          <th>Weight</th>
+          <th>Serve</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if context %} {% for pool in context %}
+        <tr>
+          <td> {{ pool.pools }} </td>
+          <td> {{ pool.label }} </td>
+          <td> {{ pool.address }} </td>
+          <td> {{ pool.weight }} </td>
+          <td>
+            <button type="submit" class="btn btn-danger" disabled id="button">{{ pool.eligible }}</button>
+          </td>
+        </tr>
+        {% endfor %} {% endif %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock %}

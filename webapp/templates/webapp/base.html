@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <title>xxxxx Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> {% load staticfiles %}
+
+  <link href="{% static 'webapp/css/bootstrap.min.css' %}" rel="stylesheet">
+  <!--[if lt IE 9]>
+			<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+  <link href="{% static 'webapp/css/styles.css' %}" rel="stylesheet">
+
+</head>
+
+<body>
+  <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <!-- <a class="navbar-brand" href="#">xxxxx</a> -->
+        <img src="{% static 'webapp/files/logo.png' %}" alt="xxxxx" width="150" height="50">
+        <a>[ AUTOMATE EVERYTHING ]</a>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#">Dashboard</a></li>
+          <li><a href="#">Settings</a></li>
+          <li><a href="#">Profile</a></li>
+          {% if user.username %}
+          <li><a href="#">I'm {{user.username}}</a></li>
+          {% else %}
+          <li><a href="/webapp/accounts/login/">Hey Stranger, Login</a>
+            <li>
+              {% endif %}
+        </ul>
+        <form class="navbar-form navbar-right">
+          <input type="text" class="form-control" placeholder="Search...">
+        </form>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container-fluid">
+
+    <div class="row row-offcanvas row-offcanvas-left">
+
+      <div class="col-sm-3 col-md-2 sidebar-offcanvas" id="sidebar" role="navigation">
+
+        <ul class="nav nav-sidebar">
+          <li class="active"><a href="/webapp/">Overview</a></li>
+          <li><a href="/webapp/console/">Console</a></li>
+          <li><a href="#" id="btn-1" data-toggle="collapse" data-target="#submenu1" aria-expanded="false">Update Database</a>
+            <ul class="nav collapse" id="submenu1" role="menu" aria-labelledby="btn-1">
+              <li><a href="/webapp/updateDB/?db=inventory">Update Inventory List</a></li>
+              <li><a href="/webapp/updateDB/?db=dsf">Update Traffic Director</a></li>
+              <li><a href="/webapp/updateDB/?db=dns">Update DNS list</a></li>
+            </ul>
+          </li>
+          <li><a href="/webapp/inventory/">Inventory</a></li>
+          <li><a href="/webapp/failover/">Failover</a></li>
+          <li><a href="/webapp/mojo/">Mojo</a></li>
+          <li><a href="/webapp/dsf/">Traffic Director</a></li>
+          <li><a href="/webapp/dns/">DNS Overview</a></li>
+        </ul>
+
+      </div>
+      <!--/span-->
+
+      <div class="col-sm-9 col-md-10 main">
+
+        <!--toggle sidebar button-->
+        <p class="visible-xs">
+          <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas"><i class="glyphicon glyphicon-chevron-left"></i></button>
+        </p>
+
+        <hr> {% block content %} {% endblock %}
+
+
+      </div>
+      <!--/row-->
+    </div>
+  </div>
+  <!--/.container-->
+
+  <footer>
+    <p class="pull-right">© xxxxx</p>
+  </footer>
+
+  <!-- script references -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+  <script src="{% static 'webapp/js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'webapp/js/scripts.js' %}"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/smoothness/jquery-ui.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
+
+  {% block javascript %} {% endblock%}
+
+</body>
+
+</html>

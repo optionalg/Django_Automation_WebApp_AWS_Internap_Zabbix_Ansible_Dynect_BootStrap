@@ -1,0 +1,55 @@
+{% extends 'webapp/base.html' %} {% load staticfiles %} {% block content %} {% if context %}
+<div class="alert alert-info alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <h1> {{ context }} </h1>
+</div>
+
+{% else %}
+
+<h1 class="sub-header"></h1>
+<h1 class="page-header"> DNS Failover </h1>
+<form class="well" name="failover" action="/webapp/failover/" method="post">
+  {% if rdata %}
+  <h3>
+    <p class="bg-info">Current DNS point to : {{ rdata }} ttl: {{ ttl }}</p>
+  </h3>
+  {% endif %} {% csrf_token %}
+  <div class="form-group">
+    <div class="radio">
+      <label>
+        <input type="radio" name="optionsRadios" id="optionsRadios1" value="prod" checked>
+        <p class="bg-warning">Failover to Production</p>
+      </label>
+    </div>
+    <div class="form-group">
+      <div class="radio">
+        <label>
+          <input type="radio" name="optionsRadios" id="optionsRadios2" value="fail">
+          <p class="bg-warning">Production to Failover</p>
+        </label>
+      </div>
+      <div class="form-group">
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" id="checkme" onchange="enable()"> I understand that I'm not doing stupid thing.
+          </label>
+        </div>
+        <button type="submit" class="btn btn-danger" disabled id="button">Go</button>
+      </div>
+</form>
+
+{% endif %} {% endblock %} {% block javascript %}
+<!-- some HTML -->
+<script language="Javascript" type="text/javascript">
+  function enable() {
+    if (document.failover.checkme.checked == '') {
+      document.failover.button.disabled = true
+    } else {
+      document.failover.button.disabled = false
+    }
+  }
+</script>
+
+{% endblock%}

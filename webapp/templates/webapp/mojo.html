@@ -1,0 +1,187 @@
+{% extends 'webapp/base.html' %} {% load staticfiles %} {% block content %} {% if response %}
+<div class="alert alert-info alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <h1> {{ response }} </h1>
+</div>
+
+{% else %}
+<h2 class="sub-header">Magic happens here (Internap + Dynect + Zabbix)</h2>
+
+<div id="tabs">
+  <ul>
+    <li><a href="#tabs-1">All you can eat</a></li>
+    <li><a href="#tabs-2">Just Dynect</a></li>
+    <li><a href="#tabs-3">Just Zabbxix</a></li>
+    <li><a href="#tabs-4">Just Internap</a></li>
+  </ul>
+
+  <div id="tabs-1">
+    <div class="table-responsive">
+      <form class="well" name="mojo" action="/webapp/mojo/" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="hosts">Enter Hosts List (DNS name only)</label>
+          <textarea class="form-control" rows="5" cols="35" placeholder="abc.xxxxx.com" name="hosts" wrap="hard" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="ttl">TTL (seconds)</label>
+          <input type="number" class="form-control" placeholder="30" name="ttl" required>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="select01">Choose Group</label>
+          <div class="controls">
+            <select id="select01" name="group" required>
+              <option>Please Choose One</option>
+              {% if groupList %} {% for group in groupList %}
+              <option value="{{ group.groupId }}"> {{ group.name }} </option>
+              {% endfor %} {% endif %}
+            </select>
+          </div>
+        </div>
+        <br>
+        <div class="control-group">
+          <label class="control-label" for="multiSelect">Choose Templates (Multi-select by hold crtl/cmd)</label>
+          <div class="controls">
+            <select multiple="multiple" id="multiSelect" size="10" name="templates" required>
+              {% if templateList %} {% for template in templateList %}
+              <option value="{{ template.templateId }}"> {{ template.name }} </option>
+              {% endfor %} {% endif %}
+            </select>
+          </div>
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" id="checkme" onchange="enable()"> I've double checked the configuration and I understand what I'm doing.
+          </label>
+        </div>
+        <button type="submit" class="btn btn-primary" disabled id="button">I'm Ready to Mojo</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="tabs-2">
+    <div class="table-responsive">
+      <form class="well" name="dynect" action="/webapp/mojo/" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="hosts">Enter Hosts List (DNS name only)</label>
+          <textarea class="form-control" rows="5" cols="35" placeholder="abc.xxxxx.com" name="hosts" wrap="hard" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="ttl">TTL (seconds)</label>
+          <input type="number" class="form-control" placeholder="30" name="ttl" required>
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" id="checkme" onchange="enable()"> I've double checked the configuration and I understand what I'm doing.
+          </label>
+        </div>
+        <button type="submit" class="btn btn-primary" disabled id="button">I'm Ready to Dynect</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="tabs-3">
+    <div class="table-responsive">
+      <form class="well" name="zabbix" action="/webapp/mojo/" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="hosts">Enter Hosts List (DNS name only)</label>
+          <textarea class="form-control" rows="5" cols="35" placeholder="abc.xxx.com" name="hosts" wrap="hard" required></textarea>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="select01">Choose Group</label>
+          <div class="controls">
+            <select id="select01" name="group" required>
+              <option>Please Choose One</option>
+              {% if groupList %} {% for group in groupList %}
+              <option value="{{ group.groupId }}"> {{ group.name }} </option>
+              {% endfor %} {% endif %}
+            </select>
+          </div>
+        </div>
+        <br>
+        <div class="control-group">
+          <label class="control-label" for="multiSelect">Choose Templates (Multi-select by hold crtl/cmd)</label>
+          <div class="controls">
+            <select multiple="multiple" id="multiSelect" size="10" name="templates" required>
+              {% if templateList %} {% for template in templateList %}
+              <option value="{{ template.templateId }}"> {{ template.name }} </option>
+              {% endfor %} {% endif %}
+            </select>
+          </div>
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" id="checkme" onchange="enable()"> I've double checked the configuration and I understand what I'm doing.
+          </label>
+        </div>
+        <button type="submit" class="btn btn-primary" disabled id="button">I'm Ready to Zabbix</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="tabs-4">
+    <div class="table-responsive">
+      <form class="well" name="internap" action="/webapp/mojo/" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="hosts">Enter Hosts List (DNS name only)</label>
+          <textarea class="form-control" rows="5" cols="35" placeholder="abc.xxxxx.com" name="hosts" wrap="hard" required></textarea>
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" id="checkme" onchange="enable()"> I understand this will create DEFAULT IT user/group via Ansible.
+          </label>
+        </div>
+        <div class="form-group">
+          <input type="hidden" name="internap" value="on">
+        </div>
+        <button type="submit" class="btn btn-primary" disabled id="button">I'm Ready to Internap</button>
+      </form>
+    </div>
+  </div>
+
+</div>
+
+{% endif %} {% endblock %} {% block javascript %}
+<!-- some HTML -->
+<script language="Javascript" type="text/javascript">
+  function enable() {
+    if (document.mojo.checkme.checked == '') {
+      document.mojo.button.disabled = true
+    } else {
+      document.mojo.button.disabled = false
+    }
+
+    if (document.dynect.checkme.checked == '') {
+      document.dynect.button.disabled = true
+    } else {
+      document.dynect.button.disabled = false
+    }
+
+    if (document.zabbix.checkme.checked == '') {
+      document.zabbix.button.disabled = true
+    } else {
+      document.zabbix.button.disabled = false
+    }
+
+    if (document.internap.checkme.checked == '') {
+      document.internap.button.disabled = true
+    } else {
+      document.internap.button.disabled = false
+    }
+  }
+</script>
+
+<!-- Multi Tabs -->
+<script>
+  $(function() {
+    $("#tabs").tabs();
+  });
+</script>
+
+
+{% endblock%}

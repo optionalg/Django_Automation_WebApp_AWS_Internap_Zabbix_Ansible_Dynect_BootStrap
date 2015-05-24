@@ -1,0 +1,35 @@
+{% extends 'webapp/base.html' %} {% load staticfiles %} {% block content %}
+<h1 class="sub-header"></h1>
+<h1 class="page-header"> Hacker-in-Residence </h1>
+
+<div class="row placeholders">
+  <div class="col-xs-6 col-sm-3 placeholder text-center">
+    <a href="https://www.youtube.com/watch?v=SmylMwp-P0k"><img src="{% static 'webapp/files/bart-man.png' %}" class="center-block img-responsive img-circle" alt="Generic placeholder thumbnail"></a>
+    <h4>Director, Infrastructure</h4>
+    <span class="text-muted">I'm the Boss</span>
+  </div>
+  <div class="col-xs-6 col-sm-3 placeholder text-center">
+    <a href="https://www.youtube.com/watch?v=tIS-6mxJh5w"><img src="{% static 'webapp/files/MojoJojo.png' %}" class="center-block img-responsive img-circle" alt="Generic placeholder thumbnail"></a>
+    <h4>Site Reliability Engineer</h4>
+    <span class="text-muted">I Am MoJo JoJo!!!</span>
+  </div>
+  <div class="col-xs-6 col-sm-3 placeholder text-center">
+    <a href="https://www.youtube.com/watch?v=2JlVqfC8-UI"><img src="{% static 'webapp/files/super-snow.png' %}"  class="center-block img-responsive img-circle" alt="Generic placeholder thumbnail"></a>
+    <h4>Site Reliability Engineer</h4>
+    <span class="text-muted">I'm cool</span>
+  </div>
+  <div class="col-xs-6 col-sm-3 placeholder text-center">
+    <a href="https://www.youtube.com/watch?v=LowVhCfLm68"><img src="{% static 'webapp/files/darth.png' %}"  class="center-block img-responsive img-circle" alt="Generic placeholder thumbnail"></a>
+    <h4>Site Reliability Engineer</h4>
+    <span class="text-muted">I'm at Colo now</span>
+  </div>
+</div>
+
+<div class="row placeholders">
+  <div class="col-xs-6 col-sm-3 placeholder text-center">
+        <a href="https://www.youtube.com/watch?v=Wu_YENZQCc4"><img src="{% static 'webapp/files/Jash.png' %}" class="center-block img-responsive img-circle" alt="Generic placeholder thumbnail"></a>
+    <h4>Site Reliability Engineer</h4>
+    <span class="text-muted">Automate everything</span>
+  </div>
+</div>
+{% endblock %}

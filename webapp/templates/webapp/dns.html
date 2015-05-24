@@ -1,0 +1,39 @@
+{% extends 'webapp/base.html' %} {% load staticfiles %} {% block content %}
+<h2 class="sub-header">Dynect aRecord List</h2>
+<div>
+  <nav>
+    <ul class="pager pull-right">
+      <li><a href="/webapp/exportCSV/?data=dns">Export to CSV file</a></li>
+      <li><a href="?page=all">Show all if you dare</a></li>
+      {% if context.has_previous %}
+      <li><a href="?page={{ context.previous_page_number }}">previous</a>
+        <li>
+          {% endif %} {% if context.number %}
+          <li>Page {{ context.number }} of {{ context.paginator.num_pages }}.</li>
+          {% endif %} {% if context.has_next %}
+          <li><a href="?page={{ context.next_page_number }}">next</a></li>
+          {% endif %}
+    </ul>
+  </nav>
+</div>
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Zone</th>
+        <th>aRecord</th>
+        <th>IP address</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if context %} {% for device in context %}
+      <tr>
+        <td> {{ device.zone }} </td>
+        <td> {{ device.aRecord }} </td>
+        <td> {{ device.ip }} </td>
+      </tr>
+      {% endfor %} {% endif %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
